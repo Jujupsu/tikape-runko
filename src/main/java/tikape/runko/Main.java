@@ -50,6 +50,7 @@ public class Main {
             
             kysymysDao.save(new Kysymys(kysymykset.size()+1, req.queryParams("kurssi"), req.queryParams("aihe"), req.queryParams("kysymysteksti")));
             res.redirect("/");
+            
             return "";
         });
         
