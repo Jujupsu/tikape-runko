@@ -1,12 +1,16 @@
 package tikape.runko;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import spark.ModelAndView;
+import spark.Spark;
 import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.Database;
 import tikape.runko.database.KysymysDao;
 import tikape.runko.database.VastausDao;
+import tikape.runko.domain.Kysymys;
 //import tikape.runko.database.OpiskelijaDao;
 
 public class Main {
@@ -31,12 +35,23 @@ public class Main {
             return new ModelAndView(map, "Kysymykset");
         }, new ThymeleafTemplateEngine());
 
-        get("/Vastaus", (req, res) -> {
+        get("/Kysymykset/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("vastaukset", vastausDao.findAll());
+            map.put("vastaukset", vastausDao.findOne(Integer.parseInt(req.params("id"))));
 
-            return new ModelAndView(map, "vastaukset");
+            return new ModelAndView(map, "Vastaus");
         }, new ThymeleafTemplateEngine());
+        
+        
+        
+        Spark.post("/Kysymykset", (req, res) -> {
+            List<Kysymys> kysymykset = kysymysDao.findAll();
+            
+            
+            kysymysDao.save(new Kysymys(kysymykset.size()+1, req.queryParams("kurssi"), req.queryParams("aihe"), req.queryParams("kysymysteksti")));
+            res.redirect("/Kysymykset");
+            return "";
+        });
 
     }
 }

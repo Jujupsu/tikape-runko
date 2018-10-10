@@ -39,6 +39,14 @@ public class Kysymys {
         this.kurssi = kurssi;
     }
     
+    public String getAihe() {
+        return aihe;
+    }
+
+    public void setAihe(String aihe) {
+        this.kurssi = aihe;
+    }
+    
     public String getKysymysteksti() {
         return kysymysteksti;
     }

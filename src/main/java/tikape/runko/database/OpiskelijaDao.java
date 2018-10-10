@@ -71,5 +71,9 @@ public class OpiskelijaDao implements Dao<Opiskelija, Integer> {
     public void delete(Integer key) throws SQLException {
         // ei toteutettu
     }
+    
+    public void save(Opiskelija opiskelija) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
