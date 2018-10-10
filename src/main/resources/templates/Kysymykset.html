@@ -19,12 +19,16 @@ and open the template in the editor.
                 <br> Aihe: <span th:text="${kysymys.aihe}">kurssin aihe</span>
                 <br> Tehtävä: <a th:href="${'/' + kysymys.id}"><span th:text="${kysymys.kysymysteksti}">kurssin kysymys</span></a>
                 
+                <form th:action="@{~/delete/{id}(id=${kysymys.id})}" method="POST">
+                    <input type="submit" value="Poista"/>
+                </form>
+                
             </li>
         </ul>
         
         <h3>Luo uusi kysymys</h3>
         
-        <form method="POST" action="/">
+        <form method="POST" action="/create">
             Kurssi:<input type="text" name="kurssi"/><br/>
             Aihe:<input type="text" name="aihe"/><br/>
             Kysymysteksti:<input type="text" name="kysymysteksti"/><br/>

@@ -74,7 +74,21 @@ public class KysymysDao implements Dao<Kysymys, Integer>{
 
     @Override
     public void delete(Integer key) throws SQLException {
-        // ei toteutettu
+        // avaa yhteys tietokantaan
+            Connection conn = database.getConnection();
+            
+            
+            // tee kysely
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM Kysymys WHERE id = ?");
+            stmt.setInt(1, key);
+            
+            stmt.executeUpdate();
+            
+            // sulje yhteys tietokantaan
+            stmt.close();
+            conn.close();
+            
+            
     }
     
     public void save(Kysymys kysymys) throws SQLException {
@@ -89,6 +103,7 @@ public class KysymysDao implements Dao<Kysymys, Integer>{
  
         stmt.executeUpdate();
         stmt.close();
+        conn.close();
  
         
     }

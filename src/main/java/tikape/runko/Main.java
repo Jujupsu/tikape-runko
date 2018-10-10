@@ -21,30 +21,30 @@ public class Main {
         }
         
         Database database = new Database("jdbc:sqlite:kysymykset.db");
-        database.init();
+//        database.init();
         KysymysDao kysymysDao = new KysymysDao(database);
         VastausDao vastausDao = new VastausDao(database);
 
 
-        get("/", (req, res) -> {
+        Spark.get("/", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("viesti", "tervehdys");
+            
             
             map.put("kysymykset", kysymysDao.findAll());
 
             return new ModelAndView(map, "Kysymykset");
         }, new ThymeleafTemplateEngine());
 
-        get("/:id", (req, res) -> {
+        Spark.get("/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("vastaukset", vastausDao.findOne(Integer.parseInt(req.params("id"))));
+            map.put("vastaukset", vastausDao.findOne(Integer.parseInt(req.params(":id"))));
 
             return new ModelAndView(map, "Vastaus");
         }, new ThymeleafTemplateEngine());
         
         
         
-        Spark.post("/", (req, res) -> {
+        Spark.post("/create", (req, res) -> {
             List<Kysymys> kysymykset = kysymysDao.findAll();
             
             
@@ -52,6 +52,16 @@ public class Main {
             res.redirect("/");
             return "";
         });
+        
+        Spark.post("/delete/:id", (req, res) -> {
+//            System.out.println(Integer.parseInt(req.params(":id")));
+            kysymysDao.delete(Integer.parseInt(req.params(":id")));
+
+            res.redirect("/");
+            return "";
+        });
+        
+        
 
     }
 }
