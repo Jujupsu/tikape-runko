@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Kysymykset</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <h1>Kysymykset</h1>
+
+        <h1>Hei opiskelijat!</h1>
+
+        <ol>
+            <li th:each="kysymys: ${kysymykset}">
+                <span th:text="${kysymys.kurssi}">kurssin nimi</span>
+            </li>
+        </ol>
+    </body>
+</html>
