@@ -12,11 +12,11 @@ package tikape.runko.domain;
 public class Vastaus {
     private Integer id;
     private String vastausteksti;
-    private Boolean oikein;
+    private Integer oikein;
     
     
 
-    public Vastaus(Integer id, String vastausteksti, Boolean oikein) {
+    public Vastaus(Integer id, String vastausteksti, Integer oikein) {
         this.id = id;
         this.vastausteksti = vastausteksti;
         this.oikein = oikein;
@@ -39,11 +39,11 @@ public class Vastaus {
         this.vastausteksti = vastausteksti;
     }
     
-    public Boolean getOikein() {
+    public Integer getOikein() {
         return oikein;
     }
 
-    public void setOikein(Boolean oikein) {
+    public void setOikein(Integer oikein) {
         this.oikein = oikein;
     }
 }

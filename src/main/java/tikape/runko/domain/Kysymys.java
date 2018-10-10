@@ -9,14 +9,14 @@ package tikape.runko.domain;
  *
  * @author juusojeskanen
  */
-public class Kurssi {
+public class Kysymys {
     private Integer id;
     private String kurssi;
     private String aihe;
     private String kysymysteksti;
     
 
-    public Kurssi(Integer id, String kurssi, String aihe, String kysymysteksti) {
+    public Kysymys(Integer id, String kurssi, String aihe, String kysymysteksti) {
         this.id = id;
         this.kurssi = kurssi;
         this.aihe = aihe;
