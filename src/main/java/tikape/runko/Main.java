@@ -26,7 +26,7 @@ public class Main {
         VastausDao vastausDao = new VastausDao(database);
 
 
-        get("/Kysymykset", (req, res) -> {
+        get("/", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("viesti", "tervehdys");
             
@@ -35,7 +35,7 @@ public class Main {
             return new ModelAndView(map, "Kysymykset");
         }, new ThymeleafTemplateEngine());
 
-        get("/Kysymykset/:id", (req, res) -> {
+        get("/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("vastaukset", vastausDao.findOne(Integer.parseInt(req.params("id"))));
 
@@ -44,12 +44,12 @@ public class Main {
         
         
         
-        Spark.post("/Kysymykset", (req, res) -> {
+        Spark.post("/", (req, res) -> {
             List<Kysymys> kysymykset = kysymysDao.findAll();
             
             
             kysymysDao.save(new Kysymys(kysymykset.size()+1, req.queryParams("kurssi"), req.queryParams("aihe"), req.queryParams("kysymysteksti")));
-            res.redirect("/Kysymykset");
+            res.redirect("/");
             return "";
         });
 

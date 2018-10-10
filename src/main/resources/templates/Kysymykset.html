@@ -17,14 +17,14 @@ and open the template in the editor.
             <li th:each="kysymys: ${kysymykset}">
                 Kurssi: <span th:text="${kysymys.kurssi}">kurssin nimi</span>
                 <br> Aihe: <span th:text="${kysymys.aihe}">kurssin aihe</span>
-                <br> Tehtävä: <a th:href="${'/Kysymykset/' + kysymys.id}"><span th:text="${kysymys.kysymysteksti}">kurssin kysymys</span></a>
+                <br> Tehtävä: <a th:href="${'/' + kysymys.id}"><span th:text="${kysymys.kysymysteksti}">kurssin kysymys</span></a>
                 
             </li>
         </ul>
         
         <h3>Luo uusi kysymys</h3>
         
-        <form method="POST" action="/Kysymykset">
+        <form method="POST" action="/">
             Kurssi:<input type="text" name="kurssi"/><br/>
             Aihe:<input type="text" name="aihe"/><br/>
             Kysymysteksti:<input type="text" name="kysymysteksti"/><br/>
