@@ -19,36 +19,16 @@ public class VastausDao implements Dao<Vastaus, Integer>{
         this.database = database;
     }
 
+    
     @Override
     public Vastaus findOne(Integer key) throws SQLException {
-        Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus WHERE id = ?");
-        stmt.setObject(1, key);
-
-        ResultSet rs = stmt.executeQuery();
-        boolean hasOne = rs.next();
-        if (!hasOne) {
-            return null;
-        }
-
-        Integer id = rs.getInt("id");
-        String vastausteksti = rs.getString("vastausteksti");
-        Integer oikein = rs.getInt("oikein");
-        
-        
-
-        Vastaus o = new Vastaus(id, vastausteksti, oikein);
-
-        rs.close();
-        stmt.close();
-        connection.close();
-
-        return o;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public List<Vastaus> findAll() throws SQLException {
 
+        
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus");
 
@@ -56,11 +36,12 @@ public class VastausDao implements Dao<Vastaus, Integer>{
         List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
             Integer id = rs.getInt("id");
+            Integer kysymys_id = rs.getInt("kysymys_id");
             String vastausteksti = rs.getString("vastausteksti");
             Integer oikein = rs.getInt("oikein");
             
 
-            vastaukset.add(new Vastaus(id, vastausteksti, oikein));
+            vastaukset.add(new Vastaus(id, kysymys_id, vastausteksti, oikein));
         }
 
         rs.close();
@@ -76,6 +57,45 @@ public class VastausDao implements Dao<Vastaus, Integer>{
     }
     
     public void save(Vastaus vastaus) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(!vastaus.getVastausteksti().isEmpty()){
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Vastaus"
+                + " (kysymys_id, vastausteksti, oikein)"
+                + " VALUES (?, ?, ?)");
+        
+        int palautus = 0;
+        if(vastaus.getOikein().equals(" OIKEIN")){
+            palautus = 1;
+        }
+        
+        stmt.setInt(1, vastaus.getKysymys_id());
+        stmt.setString(2, vastaus.getVastausteksti());
+        stmt.setInt(3, palautus);
+        
+        
+        stmt.executeUpdate();
+
+        stmt.close();
+        conn.close();
+        }
+    }
+    
+    public List<Vastaus> findForKysymys(Integer kysymysId) throws SQLException {
+        String query = "SELECT * FROM Vastaus WHERE kysymys_id = ?;";
+
+        List<Vastaus> vastaukset = new ArrayList<>();
+
+        try (Connection conn = database.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(query);
+            
+            stmt.setInt(1, kysymysId);
+            ResultSet result = stmt.executeQuery();
+
+            while (result.next()) {
+                vastaukset.add(new Vastaus(result.getInt("id"), result.getInt("kysymys_id"), result.getString("vastausteksti"), result.getInt("oikein")));
+            }
+        }
+
+        return vastaukset;
     }
 }

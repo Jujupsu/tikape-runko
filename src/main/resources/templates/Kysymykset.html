@@ -17,7 +17,7 @@ and open the template in the editor.
             <li th:each="kysymys: ${kysymykset}">
                 Kurssi: <span th:text="${kysymys.kurssi}">kurssin nimi</span>
                 <br> Aihe: <span th:text="${kysymys.aihe}">kurssin aihe</span>
-                <br> Tehtävä: <a th:href="${'/' + kysymys.id}"><span th:text="${kysymys.kysymysteksti}">kurssin kysymys</span></a>
+                <br> Tehtävä: <a th:href="${'/vastaukset/' + kysymys.id}"><span th:text="${kysymys.kysymysteksti}">kurssin kysymys</span></a>
                 
                 <form th:action="@{~/delete/{id}(id=${kysymys.id})}" method="POST">
                     <input type="submit" value="Poista"/>
