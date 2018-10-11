@@ -22,7 +22,7 @@ and open the template in the editor.
             <span th:text="${vastaus.vastausteksti}">vastausvaihtoehdot</span>
             <b> <span th:text="${vastaus.oikein}">vastauksen oikeellisuus </span> </b>
             
-            <form th:action="@{~/delete/{id}(id=${kysymys.id})}" method="POST">
+            <form th:action="@{~/vastaukset/delete/{id}(id=${vastaus.id})}" method="POST">
                     <input type="submit" value="Poista"/>
             </form>
         </li>   
@@ -37,7 +37,7 @@ and open the template in the editor.
         </form>
         
         
-
         
+        <a href="/"><span> Kysymyslistaukseen </span></a>
     </body>
 </html>

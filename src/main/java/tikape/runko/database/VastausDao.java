@@ -53,7 +53,19 @@ public class VastausDao implements Dao<Vastaus, Integer>{
 
     @Override
     public void delete(Integer key) throws SQLException {
-        // ei toteutettu
+        // avaa yhteys tietokantaan
+            Connection conn = database.getConnection();
+            
+            
+            // tee kysely
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM Vastaus WHERE id = ?");
+            stmt.setInt(1, key);
+            
+            stmt.executeUpdate();
+            
+            // sulje yhteys tietokantaan
+            stmt.close();
+            conn.close();
     }
     
     public void save(Vastaus vastaus) throws SQLException {

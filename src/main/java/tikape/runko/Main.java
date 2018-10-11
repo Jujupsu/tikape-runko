@@ -45,7 +45,7 @@ public class Main {
             return new ModelAndView(map, "Vastaus");
         }, new ThymeleafTemplateEngine());
         
-   
+        
 
         // Uuden kysymyksen luonti
         Spark.post("/create", (req, res) -> {
@@ -61,7 +61,10 @@ public class Main {
         Spark.post("/delete/:id", (req, res) -> {
 //            System.out.println(Integer.parseInt(req.params(":id")));
             kysymysDao.delete(Integer.parseInt(req.params(":id")));
-
+            
+            
+            
+            
             res.redirect("/");
             return "";
         });
@@ -80,6 +83,30 @@ public class Main {
             
             res.redirect("/vastaukset/" + Integer.parseInt(req.params(":id")));
             
+            return "";
+        });
+        
+        //Vastausvaihtoehdon poistaminen
+        Spark.post("/vastaukset/delete/:id", (req, res) -> {
+//            System.out.println(Integer.parseInt(req.params(":id")));
+            List<Vastaus> vastaukset = vastausDao.findAll();
+            System.out.println(Integer.parseInt(req.params(":id")));
+            int indeksi = 0;
+            for(Vastaus vastaus : vastaukset){
+                if(vastaus.getId()==Integer.parseInt(req.params(":id"))){
+                    indeksi = vastaus.getKysymys_id();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+            vastausDao.delete(Integer.parseInt(req.params(":id")));
+            
+
+            res.redirect("/vastaukset/" + indeksi);
             return "";
         });
         
