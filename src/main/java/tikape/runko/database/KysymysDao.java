@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import static tikape.runko.database.Database.getConnection;
 import tikape.runko.domain.Kysymys;
 
 
@@ -22,8 +23,8 @@ public class KysymysDao implements Dao<Kysymys, Integer>{
     }
 
     @Override
-    public Kysymys findOne(Integer key) throws SQLException {
-        Connection connection = database.getConnection();
+    public Kysymys findOne(Integer key) throws Exception {
+        Connection connection = getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Kysymys WHERE id = ?");
         stmt.setObject(1, key);
 
@@ -49,9 +50,9 @@ public class KysymysDao implements Dao<Kysymys, Integer>{
     }
 
     @Override
-    public List<Kysymys> findAll() throws SQLException {
+    public List<Kysymys> findAll() throws Exception {
 
-        Connection connection = database.getConnection();
+        Connection connection = getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Kysymys");
 
         ResultSet rs = stmt.executeQuery();
@@ -73,9 +74,9 @@ public class KysymysDao implements Dao<Kysymys, Integer>{
     }
 
     @Override
-    public void delete(Integer key) throws SQLException {
+    public void delete(Integer key) throws Exception {
         // avaa yhteys tietokantaan
-            Connection conn = database.getConnection();
+            Connection conn = getConnection();
             
             
             // tee kysely
@@ -99,9 +100,9 @@ public class KysymysDao implements Dao<Kysymys, Integer>{
             
     }
     
-    public void save(Kysymys kysymys) throws SQLException {
+    public void save(Kysymys kysymys) throws Exception {
         if(!kysymys.getKurssi().equals("") && !kysymys.getAihe().equals("") && !kysymys.getKysymysteksti().equals("")){
-        Connection conn = database.getConnection();
+        Connection conn = getConnection();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Kysymys"
                 + " (kurssi, aihe, kysymysteksti)"
                 + " VALUES (?,?,?)");

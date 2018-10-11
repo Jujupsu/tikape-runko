@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import static tikape.runko.database.Database.getConnection;
 import tikape.runko.domain.Vastaus;
 
 /**
@@ -21,15 +22,15 @@ public class VastausDao implements Dao<Vastaus, Integer>{
 
     
     @Override
-    public Vastaus findOne(Integer key) throws SQLException {
+    public Vastaus findOne(Integer key) throws Exception {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public List<Vastaus> findAll() throws SQLException {
+    public List<Vastaus> findAll() throws Exception {
 
         
-        Connection connection = database.getConnection();
+        Connection connection = getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus");
 
         ResultSet rs = stmt.executeQuery();
@@ -52,9 +53,9 @@ public class VastausDao implements Dao<Vastaus, Integer>{
     }
 
     @Override
-    public void delete(Integer key) throws SQLException {
+    public void delete(Integer key) throws Exception {
         // avaa yhteys tietokantaan
-            Connection conn = database.getConnection();
+            Connection conn = getConnection();
             
             
             // tee kysely
@@ -68,9 +69,9 @@ public class VastausDao implements Dao<Vastaus, Integer>{
             conn.close();
     }
     
-    public void save(Vastaus vastaus) throws SQLException {
+    public void save(Vastaus vastaus) throws Exception {
         if(!vastaus.getVastausteksti().isEmpty()){
-        Connection conn = database.getConnection();
+        Connection conn = getConnection();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Vastaus"
                 + " (kysymys_id, vastausteksti, oikein)"
                 + " VALUES (?, ?, ?)");
@@ -92,12 +93,12 @@ public class VastausDao implements Dao<Vastaus, Integer>{
         }
     }
     
-    public List<Vastaus> findForKysymys(Integer kysymysId) throws SQLException {
+    public List<Vastaus> findForKysymys(Integer kysymysId) throws Exception {
         String query = "SELECT * FROM Vastaus WHERE kysymys_id = ?;";
 
         List<Vastaus> vastaukset = new ArrayList<>();
 
-        try (Connection conn = database.getConnection()) {
+        try (Connection conn = getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(query);
             
             stmt.setInt(1, kysymysId);
