@@ -22,6 +22,8 @@ public class KysymysDao implements Dao<Kysymys, Integer>{
         this.database = database;
     }
 
+    
+
     @Override
     public Kysymys findOne(Integer key) throws Exception {
         Connection connection = getConnection();

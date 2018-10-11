@@ -14,6 +14,7 @@ import tikape.runko.domain.Vastaus;
  * @author juusojeskanen
  */
 public class VastausDao implements Dao<Vastaus, Integer>{
+    
     private Database database;
 
     public VastausDao(Database database) {

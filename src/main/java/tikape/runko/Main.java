@@ -21,10 +21,11 @@ public class Main {
             port(Integer.valueOf(System.getenv("PORT")));
         }
         
-        Database database = new Database("jdbc:sqlite:kysymykset.db");
-        database.init();
+        Database database = new Database("PORT");
+//        database.init();
         KysymysDao kysymysDao = new KysymysDao(database);
         VastausDao vastausDao = new VastausDao(database);
+
 
 
         Spark.get("/", (req, res) -> {
