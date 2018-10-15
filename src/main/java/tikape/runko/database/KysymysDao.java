@@ -80,7 +80,14 @@ public class KysymysDao implements Dao<Kysymys, Integer>{
         // avaa yhteys tietokantaan
             Connection conn = getConnection();
             
+            //Poistetaan myös kaikki kysymykseen liittyvät vastaukset
+            PreparedStatement stmt1 = conn.prepareStatement("DELETE FROM Vastaus WHERE kysymys_id = ?");
+            stmt1.setInt(1, key);
             
+            stmt1.executeUpdate();
+            
+            // sulje yhteys tietokantaan
+            stmt1.close();
             // tee kysely
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM Kysymys WHERE id = ?");
             stmt.setInt(1, key);
@@ -90,14 +97,7 @@ public class KysymysDao implements Dao<Kysymys, Integer>{
             // sulje yhteys tietokantaan
             stmt.close();
             
-            //Poistetaan myös kaikki kysymykseen liittyvät vastaukset
-            PreparedStatement stmt1 = conn.prepareStatement("DELETE FROM Vastaus WHERE kysymys_id = ?");
-            stmt1.setInt(1, key);
             
-            stmt1.executeUpdate();
-            
-            // sulje yhteys tietokantaan
-            stmt1.close();
             conn.close();
             
     }
